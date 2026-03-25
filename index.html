@@ -32,6 +32,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; width: 100%; max-width: 100%; }
   html { scroll-behavior: smooth; }
 
   body {
@@ -50,9 +51,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 80px 60px;
-    overflow: hidden;
+    padding: 80px clamp(24px, 5vw, 60px);
+    overflow-x: hidden;
     background: linear-gradient(170deg, #FFFDF7 0%, #FFF8E8 30%, #FFF3D0 60%, #FDECB5 100%);
+    width: 100%;
+    max-width: 100%;
   }
 
   .hero::before {
@@ -175,8 +178,11 @@
 
   /* ─── SECTION BASE ─── */
   section {
-    padding: 100px 60px;
+    padding: 100px clamp(24px, 5vw, 60px);
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .section-num {
@@ -349,8 +355,16 @@
     margin-top: 48px;
     background: var(--white);
     border-radius: 16px;
-    overflow: hidden;
+    overflow-x: auto;
+    display: block;
     box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+  }
+  
+  .sites-table tbody,
+  .sites-table thead {
+    display: table;
+    width: 100%;
+    min-width: 600px;
   }
 
   .sites-table thead th {
@@ -722,16 +736,20 @@
     .sun-orb { width: 120px; height: 120px; top: 40px; right: 40px; }
   }
 
-  @media (max-width: 640px) {
-    section { padding: 60px 24px; }
-    .hero { padding: 40px 24px; }
-    .hero-stats { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) {
+    section { padding: 60px 20px; }
+    .hero { padding: 40px 20px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .hero-stat { padding: 16px 12px; text-align: center; }
     .sdg-grid { grid-template-columns: 1fr; }
     .outcomes-grid { grid-template-columns: 1fr; }
     .specs-strip { grid-template-columns: 1fr; }
     .sun-orb { width: 80px; height: 80px; top: 24px; right: 24px; }
+    .hero-stat-number { font-size: 28px; }
+    .spec-item { border-right: none; border-bottom: 1px solid var(--divider); }
+    .spec-item:last-child { border-bottom: none; }
   }
-
+  
   @media print {
     body { background: white; }
     .hero { min-height: auto; background: white; }
