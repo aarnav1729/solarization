@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light for All · Community Solar Impact Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #E8A317;
+    --sun-deep: #C7880B;
+    --sun-glow: #F5C842;
+    --sun-pale: #FFF3D0;
+    --sun-wash: #FFFBF0;
+    --sky: #F7F4EE;
+    --sky-warm: #F0EBE0;
+    --earth: #1C1A16;
+    --earth-mid: #3D3830;
+    --text-primary: #2C2820;
+    --text-body: #504A3F;
+    --text-muted: #8A8274;
+    --white: #FFFFFF;
+    --green: #2D8C4E;
+    --green-light: #E8F5EC;
+    --blue: #2E6B9E;
+    --blue-light: #E6F0F8;
+    --orange: #D4712A;
+    --orange-light: #FFF0E4;
+    --teal: #1E8C7E;
+    --teal-light: #E4F5F3;
+    --divider: rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--sky);
+    color: var(--text-body);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 60px;
+    overflow: hidden;
+    background: linear-gradient(170deg, #FFFDF7 0%, #FFF8E8 30%, #FFF3D0 60%, #FDECB5 100%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(232,163,23,0.15) 0%, rgba(245,200,66,0.05) 40%, transparent 70%);
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sun), transparent);
+  }
+
+  /* sun circle */
+  .sun-orb {
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #FFF3D0, #F5C842, #E8A317);
+    box-shadow: 0 0 80px rgba(232,163,23,0.25), 0 0 200px rgba(245,200,66,0.1);
+    opacity: 0;
+    animation: sunRise 1.5s ease 0.2s forwards;
+  }
+
+  @keyframes sunRise {
+    from { opacity: 0; transform: translateY(40px) scale(0.8); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .hero-partners {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--sun-deep);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(52px, 8vw, 110px);
+    line-height: 0.95;
+    color: var(--earth);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--sun-deep);
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(232,163,23,0.25);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .hero-stat {
+    padding: 32px 0;
+    border-right: 1px solid rgba(232,163,23,0.12);
+  }
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 700;
+    color: var(--earth);
+    line-height: 1;
+  }
+
+  .hero-stat-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--sun-deep);
+    margin-left: 4px;
+  }
+
+  .hero-stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    padding: 100px 60px;
+    position: relative;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--sun-deep);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700;
+    color: var(--earth);
+    margin-bottom: 40px;
+    line-height: 1.1;
+    max-width: 700px;
+  }
+
+  .prose {
+    max-width: 680px;
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--text-body);
+  }
+  .prose p { margin-bottom: 24px; }
+  .prose strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ─── EXECUTIVE SUMMARY ─── */
+  .exec-summary {
+    background: var(--white);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .exec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* ─── QUOTE BLOCK ─── */
+  .pullquote {
+    position: relative;
+    padding: 40px 0 40px 36px;
+    border-left: 3px solid var(--sun);
+    margin: 40px 0;
+    background: linear-gradient(90deg, rgba(245,200,66,0.06), transparent);
+  }
+
+  .pullquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-style: italic;
+    color: var(--earth-mid);
+    line-height: 1.6;
+    margin-bottom: 14px !important;
+  }
+
+  .pullquote cite {
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ─── BACKGROUND ─── */
+  .context-section {
+    background: var(--sky);
+    position: relative;
+  }
+
+  .context-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,163,23,0.3), transparent);
+  }
+
+  .context-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  /* ─── SDG CARDS ─── */
+  .sdg-section {
+    background: var(--white);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .sdg-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .sdg-card {
+    background: var(--sky);
+    border: 1px solid var(--divider);
+    border-radius: 16px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .sdg-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+
+  .sdg-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .sdg-card:nth-child(1)::before { background: var(--orange); }
+  .sdg-card:nth-child(2)::before { background: var(--sun); }
+  .sdg-card:nth-child(3)::before { background: var(--teal); }
+  .sdg-card:nth-child(4)::before { background: var(--blue); }
+
+  .sdg-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .sdg-card:nth-child(1) .sdg-num { color: var(--orange); }
+  .sdg-card:nth-child(2) .sdg-num { color: var(--sun-deep); }
+  .sdg-card:nth-child(3) .sdg-num { color: var(--teal); }
+  .sdg-card:nth-child(4) .sdg-num { color: var(--blue); }
+
+  .sdg-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .sdg-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* ─── SITES TABLE ─── */
+  .sites-section {
+    background: var(--sky);
+  }
+
+  .sites-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 48px;
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+  }
+
+  .sites-table thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sun-deep);
+    text-align: left;
+    padding: 20px;
+    background: var(--sun-wash);
+    border-bottom: 1px solid rgba(232,163,23,0.15);
+  }
+
+  .sites-table tbody td {
+    padding: 20px;
+    font-size: 15px;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+
+  .sites-table tbody tr:last-child td { border-bottom: none; }
+
+  .sites-table tbody tr {
+    transition: background 0.2s ease;
+  }
+
+  .sites-table tbody tr:hover {
+    background: rgba(245,200,66,0.04);
+  }
+
+  .site-name {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .site-capacity {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: var(--sun-deep);
+    font-size: 15px;
+  }
+
+  .site-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-residential { background: var(--green-light); color: var(--green); }
+  .tag-institutional { background: var(--orange-light); color: var(--orange); }
+  .tag-industrial { background: var(--blue-light); color: var(--blue); }
+  .tag-community { background: var(--teal-light); color: var(--teal); }
+
+  /* ─── TECH SPECS ─── */
+  .specs-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 40px;
+    background: var(--white);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .spec-item {
+    padding: 28px 24px;
+    border-right: 1px solid var(--divider);
+  }
+  .spec-item:last-child { border-right: none; }
+
+  .spec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .spec-value {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ─── OUTCOMES ─── */
+  .outcomes-section {
+    background: var(--white);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .outcome-card {
+    background: var(--sky);
+    border-radius: 16px;
+    padding: 36px 32px;
+    border: 1px solid var(--divider);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .outcome-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+  }
+
+  .outcome-metric {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--sun-deep);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .outcome-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .outcome-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* ─── VOICES ─── */
+  .voices-section {
+    background: var(--sky);
+  }
+
+  .voices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .voice-card {
+    position: relative;
+    padding: 40px;
+    background: var(--white);
+    border: 1px solid var(--divider);
+    border-radius: 16px;
+  }
+
+  .voice-card::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(232,163,23,0.15);
+    position: absolute;
+    top: 10px;
+    left: 24px;
+    line-height: 1;
+  }
+
+  .voice-site {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sun-deep);
+    margin-bottom: 16px;
+  }
+
+  .voice-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+
+  .voice-attr {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ─── PARTNERS ─── */
+  .partners-section {
+    background: var(--white);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .partner-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .partner-block {
+    padding: 40px 32px;
+    border: 1px solid rgba(232,163,23,0.15);
+    border-radius: 16px;
+    background: linear-gradient(180deg, var(--sun-wash), var(--white));
+  }
+
+  .partner-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sun-deep);
+    margin-bottom: 16px;
+  }
+
+  .partner-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .partner-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* ─── SUSTAINABILITY ─── */
+  .sustain-section {
+    background: var(--sky);
+  }
+
+  .sustain-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 48px;
+  }
+
+  .sustain-col h3 {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid;
+  }
+
+  .sustain-col:nth-child(1) h3 { border-color: var(--green); }
+  .sustain-col:nth-child(2) h3 { border-color: var(--sun); }
+  .sustain-col:nth-child(3) h3 { border-color: var(--blue); }
+
+  .sustain-col p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .sustain-col strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ─── CLOSING ─── */
+  .closing {
+    text-align: center;
+    padding: 120px 60px;
+    background: linear-gradient(180deg, var(--sky) 0%, var(--sun-wash) 50%, var(--sun-pale) 100%);
+    position: relative;
+  }
+
+  .closing::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(232,163,23,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .closing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    color: var(--earth);
+    max-width: 600px;
+    margin: 0 auto 24px;
+    line-height: 1.2;
+  }
+
+  .closing-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.75;
+  }
+
+  .gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--sun);
+    margin: 40px auto;
+  }
+
+  .footer {
+    padding: 40px 60px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: var(--white);
+    border-top: 1px solid var(--divider);
+  }
+
+  /* ─── NOTE BOX ─── */
+  .correction-note {
+    display: inline-block;
+    background: var(--orange-light);
+    border: 1px solid rgba(212,113,42,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--orange);
+    margin-top: 8px;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    section { padding: 80px 40px; }
+    .hero { padding: 60px 40px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .exec-grid, .context-cols { grid-template-columns: 1fr; gap: 48px; }
+    .sdg-grid { grid-template-columns: repeat(2, 1fr); }
+    .outcomes-grid { grid-template-columns: repeat(2, 1fr); }
+    .partner-blocks { grid-template-columns: 1fr; }
+    .sustain-cols { grid-template-columns: 1fr; }
+    .voices-grid { grid-template-columns: 1fr; }
+    .specs-strip { grid-template-columns: repeat(2, 1fr); }
+    .sun-orb { width: 120px; height: 120px; top: 40px; right: 40px; }
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 60px 24px; }
+    .hero { padding: 40px 24px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .sdg-grid { grid-template-columns: 1fr; }
+    .outcomes-grid { grid-template-columns: 1fr; }
+    .specs-strip { grid-template-columns: 1fr; }
+    .sun-orb { width: 80px; height: 80px; top: 24px; right: 24px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .hero { min-height: auto; background: white; }
+    section { padding: 40px 20px; }
+    .sun-orb { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+  <div class="sun-orb"></div>
+  <div class="hero-partners">Rotary Club of Lake District Moinabad &ensp;×&ensp; Premier Energies</div>
+  <h1 class="hero-title">Light <em>for</em> All</h1>
+  <p class="hero-subtitle">Community Solar Impact Report · Telangana, India</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-number">12,361<span class="hero-stat-unit">kW</span></div>
+      <div class="hero-stat-label">Total Solar Capacity</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">30,903</div>
+      <div class="hero-stat-label">Panels Installed (400W)</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">355<span class="hero-stat-unit">+</span></div>
+      <div class="hero-stat-label">Homes Solarized</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">11,781<span class="hero-stat-unit">T</span></div>
+      <div class="hero-stat-label">CO₂ Avoided per Year</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ EXECUTIVE SUMMARY ════════ -->
+<section class="exec-summary">
+  <div class="exec-grid">
+    <div>
+      <div class="section-num">01 · Executive Summary</div>
+      <h2 class="section-title">Rooftop solar across seven sites. One district. Real impact.</h2>
+    </div>
+    <div class="prose">
+      <p>The Rotary Club of Lake District Moinabad and Premier Energies have deployed <strong>12,361 kW of rooftop solar</strong> across seven sites in Telangana, from an orphanage in Hyderabad to 355 homes in the village of Kondareddypalli.</p>
+      <p>The logic behind the project is uncomplicated: when a community organization with deep local trust partners with an industrial manufacturer that builds panels for a living, solar stops being a policy aspiration and becomes something people can actually use.</p>
+      <p>The two Premier Energies manufacturing facilities (PEPPL and PEGEPL) alone generate <strong>over 14.3 million kWh</strong> of clean energy annually, avoiding <strong>11,781 tonnes of CO₂</strong> and saving <strong>₹10.75 crores</strong> in energy costs each year.</p>
+      <p>But the story worth telling is smaller in scale: children at Shishu Vihar studying after dusk because the lights stay on, 355 families in Kondareddypalli planning their days around power they actually have, a crematorium in Hyderabad running cleanly and without interruption.</p>
+
+      <div class="pullquote">
+        <p>It's not just electricity. It's the fact that we don't have to think about it anymore.</p>
+        <cite>Caregiver, Shishu Vihar Orphanage</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ BACKGROUND ════════ -->
+<section class="context-section">
+  <div class="section-num fade-in">02 · Background</div>
+  <h2 class="section-title fade-in">Why this matters in Telangana</h2>
+  <div class="context-cols">
+    <div class="prose fade-in">
+      <p>Much of rural Telangana still contends with unreliable grid power. Households and institutions fill the gaps with diesel generators and kerosene, which are expensive to run, damaging to breathe, and entirely avoidable in a state with 300+ days of usable sunlight per year.</p>
+      <p>Premier Energies, one of India's largest integrated solar manufacturers, saw a clear fit between its CSR mandate and Rotary's ground-level reach. The Rotary Club of Lake District Moinabad, chartered in 2021 (Club ID 222166, R.I. District 3150), brought the harder-to-build asset: trust. Members knew which sites would benefit most and could coordinate access where outsiders couldn't.</p>
+    </div>
+    <div class="prose fade-in">
+      <p>Site selection was deliberate. The team chose locations based on need, not visibility: orphanages, crematoriums, community halls, and residential clusters passed over by conventional grid expansion.</p>
+      <p>The initiative's launch at Shishu Vihar was led by <strong>Smt. A. Nirmala Kanthi Wesley, IAS</strong>, Director, Women Child Development & Scheduled Caste (WCD&SC), Government of Telangana, lending state-level endorsement and opening the door for future government collaboration.</p>
+      <div class="pullquote">
+        <p>We didn't pick locations for optics. We picked them because they'd been waiting the longest.</p>
+        <cite>Rtn. Chiranjeev Singh Saluja, Past President, RCLD Moinabad & MD, Premier Energies</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SDG ════════ -->
+<section class="sdg-section">
+  <div class="section-num fade-in">03 · SDG Alignment</div>
+  <h2 class="section-title fade-in">Four goals. Measurable contributions.</h2>
+  <div class="sdg-grid">
+    <div class="sdg-card fade-in">
+      <div class="sdg-num">4</div>
+      <div class="sdg-name">Quality Education</div>
+      <div class="sdg-desc">The 45 kW system at Shishu Vihar keeps classrooms lit after dusk, removing one of the most basic barriers to learning for children in institutional care.</div>
+    </div>
+    <div class="sdg-card fade-in">
+      <div class="sdg-num">7</div>
+      <div class="sdg-name">Affordable & Clean Energy</div>
+      <div class="sdg-desc">12,361 kW of solar capacity deployed across homes, civic institutions, and factories, replacing grid dependency with reliable, locally generated power.</div>
+    </div>
+    <div class="sdg-card fade-in">
+      <div class="sdg-num">8</div>
+      <div class="sdg-name">Decent Work & Economic Growth</div>
+      <div class="sdg-desc">₹10.75 crores in annual energy savings at PEPPL and PEGEPL. Lower operating costs protect jobs and strengthen long-term business viability.</div>
+    </div>
+    <div class="sdg-card fade-in">
+      <div class="sdg-num">17</div>
+      <div class="sdg-name">Partnerships for the Goals</div>
+      <div class="sdg-desc">A working model: manufacturer CSR plus community organization. Specific enough to be auditable, general enough to replicate elsewhere.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ INSTALLATION SITES ════════ -->
+<section class="sites-section">
+  <div class="section-num fade-in">04 · Implementation</div>
+  <h2 class="section-title fade-in">Seven sites. Each chosen for impact, not optics.</h2>
+  <table class="sites-table fade-in">
+    <thead>
+      <tr>
+        <th>Site</th>
+        <th>Location</th>
+        <th>Capacity</th>
+        <th>Type</th>
+        <th>Primary Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="site-name">Shishu Vihar Orphanage</span></td>
+        <td>Hyderabad</td>
+        <td><span class="site-capacity">45 kW</span></td>
+        <td><span class="site-tag tag-institutional">Institutional</span></td>
+        <td>Lighting, fans, medication refrigeration</td>
+      </tr>
+      <tr>
+        <td><span class="site-name">Swarg Vatika Crematorium</span></td>
+        <td>Hyderabad</td>
+        <td><span class="site-capacity">20 kW</span></td>
+        <td><span class="site-tag tag-community">Community</span></td>
+        <td>Facility lighting & essential services</td>
+      </tr>
+      <tr>
+        <td><span class="site-name">Kondareddypalli Village</span></td>
+        <td>Telangana</td>
+        <td><span class="site-capacity">1,206 kW</span></td>
+        <td><span class="site-tag tag-residential">Residential</span></td>
+        <td>355 homes: lighting, cooking, charging</td>
+      </tr>
+      <tr>
+        <td><span class="site-name">Member Beneficiaries</span></td>
+        <td>Hyderabad</td>
+        <td><span class="site-capacity">70 kW</span></td>
+        <td><span class="site-tag tag-residential">Residential</span></td>
+        <td>DGN & leadership model installations</td>
+      </tr>
+      <tr>
+        <td><span class="site-name">Dhanwada Community</span></td>
+        <td>Dhanwada</td>
+        <td><span class="site-capacity">20 kW</span></td>
+        <td><span class="site-tag tag-community">Community</span></td>
+        <td>Pumps, offices, multi-purpose halls</td>
+      </tr>
+      <tr>
+        <td><span class="site-name">PEPPL Manufacturing</span></td>
+        <td>Telangana</td>
+        <td><span class="site-capacity">6,000 kW</span></td>
+        <td><span class="site-tag tag-industrial">Industrial</span></td>
+        <td>Factory operations (7.86M kWh/yr)</td>
+      </tr>
+      <tr>
+        <td><span class="site-name">PEGEPL Manufacturing</span></td>
+        <td>Telangana</td>
+        <td><span class="site-capacity">5,000 kW</span></td>
+        <td><span class="site-tag tag-industrial">Industrial</span></td>
+        <td>Factory operations (6.50M kWh/yr)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="specs-strip fade-in">
+    <div class="spec-item">
+      <div class="spec-label">Panels</div>
+      <div class="spec-value">400W Monocrystalline × 30,903</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Inverters</div>
+      <div class="spec-value">Polycab & Growatt</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Safety</div>
+      <div class="spec-value">ACDB/DCDB at all residential sites</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Monitoring</div>
+      <div class="spec-value">GPS-tagged photo verification (NoteCam)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ OUTCOMES ════════ -->
+<section class="outcomes-section">
+  <div class="section-num fade-in">05 · Outcomes</div>
+  <h2 class="section-title fade-in">The numbers.</h2>
+  <div class="outcomes-grid">
+    <div class="outcome-card fade-in">
+      <div class="outcome-metric">12,361</div>
+      <div class="outcome-unit">kW installed</div>
+      <div class="outcome-desc">Equivalent to powering roughly 12,000 average Indian homes year-round.</div>
+    </div>
+    <div class="outcome-card fade-in">
+      <div class="outcome-metric">30,903</div>
+      <div class="outcome-unit">panels deployed</div>
+      <div class="outcome-desc">400W monocrystalline units sourced and installed by Premier Energies.</div>
+    </div>
+    <div class="outcome-card fade-in">
+      <div class="outcome-metric">355</div>
+      <div class="outcome-unit">households transformed</div>
+      <div class="outcome-desc">Kondareddypalli village moved from erratic grid dependency to reliable, locally generated solar.</div>
+    </div>
+    <div class="outcome-card fade-in">
+      <div class="outcome-metric">6,450</div>
+      <div class="outcome-unit">T CO₂ avoided (PEPPL)</div>
+      <div class="outcome-desc">At 0.82 kg CO₂ per kWh generated. PEGEPL adds another 5,331 tonnes for 11,781 T combined.</div>
+    </div>
+    <div class="outcome-card fade-in">
+      <div class="outcome-metric">₹10.75</div>
+      <div class="outcome-unit">crores saved annually</div>
+      <div class="outcome-desc">₹5.68 Cr (PEPPL) + ₹5.07 Cr (PEGEPL), roughly $1.2 million freed for reinvestment.</div>
+    </div>
+    <div class="outcome-card fade-in">
+      <div class="outcome-metric">7</div>
+      <div class="outcome-unit">diverse sites</div>
+      <div class="outcome-desc">Spanning orphanage, crematorium, community buildings, residential, and industrial installations.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VOICES ════════ -->
+<section class="voices-section">
+  <div class="section-num fade-in">06 · On the Ground</div>
+  <h2 class="section-title fade-in">What it actually changed.</h2>
+  <div class="voices-grid">
+    <div class="voice-card fade-in">
+      <div class="voice-site">Shishu Vihar · 45 kW</div>
+      <div class="voice-text">Children study under consistent light after dark. Medications stay refrigerated. Staff no longer plan around outages. They plan around the children.</div>
+      <div class="voice-attr">Caregiver report</div>
+    </div>
+    <div class="voice-card fade-in">
+      <div class="voice-site">Kondareddypalli · 1,206 kW</div>
+      <div class="voice-text">We used to wait for power. Now we plan around it. Homework gets done. Phones charge. We cook without smoke.</div>
+      <div class="voice-attr">Radha Amma, mother of three</div>
+    </div>
+    <div class="voice-card fade-in">
+      <div class="voice-site">Dhanwada · 20 kW</div>
+      <div class="voice-text">You don't hear it. But you feel it in the fans running, in meetings that don't get cancelled, in a village that keeps moving.</div>
+      <div class="voice-attr">Local volunteer</div>
+    </div>
+    <div class="voice-card fade-in">
+      <div class="voice-site">Member Installations · 70 kW</div>
+      <div class="voice-text">Three Rotary leaders, including the District Governor Nominee and Premier Energies' MD, installed panels on their own roofs. Lead by doing, not announcing.</div>
+      <div class="voice-attr">Project record</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PARTNERSHIPS ════════ -->
+<section class="partners-section">
+  <div class="section-num fade-in">07 · Partnerships</div>
+  <h2 class="section-title fade-in">Who built this. And what each brought.</h2>
+  <div class="partner-blocks">
+    <div class="partner-block fade-in">
+      <div class="partner-role">Technology & Implementation</div>
+      <div class="partner-name">Premier Energies</div>
+      <div class="partner-desc">India's second-largest integrated solar cell and module manufacturer. Contributed panels, inverters, installation crews, and technical oversight. Their industrial rooftops at PEPPL (6 MW) and PEGEPL (5 MW) serve as proof that commercial-scale solar is both financially viable and socially productive.</div>
+    </div>
+    <div class="partner-block fade-in">
+      <div class="partner-role">Community Access & Trust</div>
+      <div class="partner-name">Rotary Club of Lake District Moinabad</div>
+      <div class="partner-desc">Site identification, community coordination, logistics, and the credibility that comes from sustained local presence. Chartered 2021. Club ID 222166, R.I. District 3150. India's first Paul Harris Society Club in District 3150.</div>
+    </div>
+    <div class="partner-block fade-in">
+      <div class="partner-role">Institutional Endorsement</div>
+      <div class="partner-name">Government of Telangana</div>
+      <div class="partner-desc">Smt. A. Nirmala Kanthi Wesley, IAS, Director, WCD&SC, led the Shishu Vihar inauguration, signaling state-level alignment and opening pathways for expansion into government-run institutions across Telangana.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SUSTAINABILITY ════════ -->
+<section class="sustain-section">
+  <div class="section-num fade-in">08 · Sustainability Vision</div>
+  <h2 class="section-title fade-in">Built to last. Designed to spread.</h2>
+  <div class="sustain-cols">
+    <div class="sustain-col fade-in">
+      <h3>Environmental</h3>
+      <p><strong>11,781+ tonnes of CO₂</strong> avoided annually across corporate sites. Each community rooftop prevents up to 20 tonnes per year, the equivalent of planting 1,000 trees per site, every year.</p>
+      <p>Zero noise. Zero emissions. The panels run silently and indefinitely, fitting into village life rather than disrupting it.</p>
+    </div>
+    <div class="sustain-col fade-in">
+      <h3>Economic</h3>
+      <p><strong>₹10.75 crores</strong> (over $1.2 million) in annual savings at PEPPL and PEGEPL, directly strengthening corporate financial resilience. Reduced energy bills at Shishu Vihar and community sites free institutional budgets for core services.</p>
+      <p>In Kondareddypalli, lower household energy costs mean more money stays in the local economy.</p>
+    </div>
+    <div class="sustain-col fade-in">
+      <h3>Social & Institutional</h3>
+      <p>Government-attended inaugurations create public accountability. GPS and photo-verified documentation enables audit-ready reporting for future grants.</p>
+      <p>The model is replicable by design: aligned incentives, clear roles, shared values. Other Rotary clubs and CSR-active companies can adopt the same structure in their own districts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CLOSING ════════ -->
+<section class="closing">
+  <div class="gold-line"></div>
+  <h2 class="closing-title fade-in">This isn't a donation.<br>It's infrastructure.</h2>
+  <p class="closing-sub fade-in">Resilience built into rooftops. Dignity powered by sunlight. A model that works because it was designed around need, and built to be copied.</p>
+  <div class="gold-line"></div>
+</section>
+
+<footer class="footer">
+  Rotary Club of Lake District Moinabad (Club ID 222166, R.I. District 3150) × Premier Energies · Telangana, India
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
